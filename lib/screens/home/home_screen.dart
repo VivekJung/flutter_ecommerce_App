@@ -44,19 +44,46 @@ class HomeScreen extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
+                  const AdBanner120(
+                    heightOfBanner: 120,
+                    imageUrl:
+                        "https://image.shutterstock.com/image-vector/healthy-vector-banner-design-concept-260nw-507123040.jpg",
+                    imgFit: BoxFit.fitWidth,
+                    hasUpperDivider: false,
+                    hasLowerDivider: false,
+                    hasIcon: false,
+                  ),
                   const SectionTitle(title: "TAILORED FOR YOU"),
                   ProductCarousel(
                       products: Product.products
                           .where((product) => product.isRecommended)
                           .toList()),
-                  const AdBanner120(),
-                  const SectionTitle(title: "IN HIGH DEMAND"),
+                  const AdBanner120(
+                    heightOfBanner: 120,
+                    hasUpperDivider: true,
+                    hasLowerDivider: true,
+                    hasIcon: true,
+                    imgFit: BoxFit.fitWidth,
+                    imageUrl:
+                        "https://businessfirstfamily.com/wp-content/uploads/2017/04/sale-banners-tips-business-owners.jpg",
+                    // "https://img.freepik.com/free-vector/black-friday-sale-banner-with-limited-time-offer-details_1017-28051.jpg?w=2000",
+                  ),
+                  const SectionTitle(title: "CRAZILY IN DEMAND"),
                   ProductCarousel(
                       products: Product.products
                           .where((product) => product.isPopular)
                           .toList()),
-                  const SectionTitle(title: "Testing"),
+                  const SectionTitle(title: "NEW IN THE HOOD"),
                   ProductCarousel(products: Product.products),
+                  const AdBanner120(
+                    heightOfBanner: 160,
+                    hasLowerDivider: true,
+                    hasUpperDivider: true,
+                    hasIcon: true,
+                    imgFit: BoxFit.fill,
+                    imageUrl:
+                        "https://image.shutterstock.com/image-vector/big-sale-banner-discounts-vector-260nw-311461337.jpg",
+                  ),
                 ],
               ),
             ),
