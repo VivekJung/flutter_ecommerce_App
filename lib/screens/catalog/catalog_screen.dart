@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/config/theme/custom_text_widget.dart';
 import 'package:ecommerce_app/models/models.dart';
+import 'package:ecommerce_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/widgets/widgets.dart';
 
@@ -62,14 +63,9 @@ class CatalogScreen extends StatelessWidget {
               },
             ),
           ),
-          const AdBanner120(
-            hasLowerDivider: true,
-            heightOfBanner: 80,
-            hasUpperDivider: true,
-            imgFit: BoxFit.fill,
-            imageUrl:
-                "https://img.freepik.com/free-vector/black-friday-sale-banner-with-limited-time-offer-details_1017-28051.jpg?w=2000",
-          ),
+          const Divider(color: Colors.black),
+          const BottomMenuProduct(),
+          const Divider(color: Colors.black),
         ],
       ),
     );

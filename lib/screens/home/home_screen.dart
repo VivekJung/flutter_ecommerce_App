@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_app/models/models.dart';
-import 'package:ecommerce_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/widgets/widgets.dart';
 
@@ -66,7 +65,6 @@ class HomeScreen extends StatelessWidget {
                     imgFit: BoxFit.fitWidth,
                     imageUrl:
                         "https://businessfirstfamily.com/wp-content/uploads/2017/04/sale-banners-tips-business-owners.jpg",
-                    // "https://img.freepik.com/free-vector/black-friday-sale-banner-with-limited-time-offer-details_1017-28051.jpg?w=2000",
                   ),
                   const SectionTitle(title: "CRAZILY IN DEMAND"),
                   ProductCarousel(
