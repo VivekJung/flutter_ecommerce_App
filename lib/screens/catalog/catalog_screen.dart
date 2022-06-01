@@ -1,6 +1,5 @@
 import 'package:ecommerce_app/config/theme/custom_text_widget.dart';
 import 'package:ecommerce_app/models/models.dart';
-import 'package:ecommerce_app/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/widgets/widgets.dart';
 
@@ -28,7 +27,7 @@ class CatalogScreen extends StatelessWidget {
         .toList();
     return Scaffold(
       appBar: CustomAppBar(title: category.name),
-      bottomNavigationBar: const CustomBottomAppBar(),
+      bottomNavigationBar: const BottomMenuCategory(),
       body: Column(
         children: [
           CategoryBanner(imageUrl: category.imgUrl),
@@ -64,8 +63,70 @@ class CatalogScreen extends StatelessWidget {
             ),
           ),
           const Divider(color: Colors.black),
-          const BottomMenuProduct(),
-          const Divider(color: Colors.black),
+        ],
+      ),
+    );
+  }
+}
+
+class BottomMenuCategory extends StatelessWidget {
+  const BottomMenuCategory({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      height: 60,
+      width: MediaQuery.of(context).size.width,
+      color: Colors.black,
+      child: Row(
+        children: [
+          CustomIconButton(
+              context: context,
+              bgColor: Colors.transparent,
+              iconColor: Colors.white,
+              icon: Icons.arrow_back_ios_new,
+              buttonFunction: () => Navigator.pop(context)),
+          Expanded(
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              children: [
+                CustomIconButton(
+                  context: context,
+                  bgColor: Colors.white,
+                  iconColor: Colors.black,
+                  icon: Icons.search,
+                ),
+                const SizedBox(width: 10),
+                CustomIconButton(
+                  context: context,
+                  bgColor: const Color.fromARGB(255, 11, 163, 57),
+                  iconColor: Colors.white,
+                  icon: Icons.shopping_cart,
+                  iconLabelText: "View CART",
+                ),
+                const SizedBox(width: 10),
+                CustomIconButton(
+                  context: context,
+                  bgColor: const Color.fromARGB(255, 163, 3, 3),
+                  iconColor: Colors.white,
+                  icon: Icons.favorite,
+                  iconLabelText: "Wishlist",
+                ),
+                const SizedBox(width: 10),
+                CustomIconButton(
+                  context: context,
+                  bgColor: const Color.fromARGB(255, 3, 70, 158),
+                  iconColor: Colors.white,
+                  icon: Icons.person,
+                  iconLabelText: "Profile",
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

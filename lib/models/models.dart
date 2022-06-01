@@ -1,2 +1,3 @@
 export 'category_model.dart';
 export 'product_model.dart';
+export 'wishlist_model.dart';

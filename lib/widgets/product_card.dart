@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 class ProductCard extends StatelessWidget {
   final Product product;
   final double widthFactor;
+  final double leftPosition;
   const ProductCard({
     Key? key,
     required this.product,
     this.widthFactor = 2.5,
+    this.leftPosition = 5,
   }) : super(key: key);
 
   @override
@@ -27,23 +29,23 @@ class ProductCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 0,
+            left: leftPosition,
             right: 0,
             bottom: 0,
             child: Container(
               width: MediaQuery.of(context).size.width / 2.9,
-              height: 40,
+              height: 58,
               decoration: BoxDecoration(color: Colors.black.withAlpha(50)),
             ),
           ),
           Positioned(
-            left: 3,
+            left: leftPosition + 3,
             right: 3,
             bottom: 3,
             child: Container(
               padding: const EdgeInsets.only(left: 5, right: 5),
               width: MediaQuery.of(context).size.width / 2.9 - 6,
-              height: 45,
+              height: 62,
               decoration: BoxDecoration(color: Colors.black.withAlpha(120)),
               child: Row(
                 children: [

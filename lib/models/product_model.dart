@@ -43,7 +43,7 @@ class Product extends Equatable {
       "",
     ),
     const Product(
-      'Ayur Slim Tea',
+      'Ayur Slim Cutter Herbal Tea',
       'Natural',
       "In nature's embrace",
       "https://grandbazaronline.com/wp-content/uploads/2020/12/HIMALAYA-AYUR-SLIM-TEA-BAG-10S.jpg",

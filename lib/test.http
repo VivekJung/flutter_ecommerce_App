@@ -1,0 +1,1 @@
+GET https://api.plos.org/search?q=title:DNA/response/numFound/1

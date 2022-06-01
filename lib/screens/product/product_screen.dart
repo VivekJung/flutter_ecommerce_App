@@ -1,6 +1,8 @@
+import 'package:ecommerce_app/blocs/wishlist/wishlist_bloc.dart';
 import 'package:ecommerce_app/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/widgets/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductScreen extends StatelessWidget {
   final Product product;
@@ -17,9 +19,9 @@ class ProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: "Product Info"),
-      bottomNavigationBar: const BottomAppBar(
+      bottomNavigationBar: BottomAppBar(
         color: Colors.black,
-        child: BottomMenuProduct(),
+        child: BottomMenuProduct(product: product),
       ),
       body: Column(
         children: [
@@ -103,8 +105,10 @@ class ProductScreen extends StatelessWidget {
 }
 
 class BottomMenuProduct extends StatelessWidget {
+  final Product product;
   const BottomMenuProduct({
     Key? key,
+    required this.product,
   }) : super(key: key);
 
   @override
@@ -127,13 +131,21 @@ class BottomMenuProduct extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               children: [
-                CustomIconButton(
-                  context: context,
-                  bgColor: const Color.fromARGB(255, 163, 3, 3),
-                  iconColor: Colors.white,
-                  icon: Icons.favorite,
-                  iconLabelText: "To Wishlist",
-                ),
+                BlocBuilder<WishListBloc, WishListState>(
+                    builder: (context, state) {
+                  return CustomIconButton(
+                    context: context,
+                    bgColor: const Color.fromARGB(255, 163, 3, 3),
+                    iconColor: Colors.white,
+                    icon: Icons.favorite,
+                    iconLabelText: "To Wishlist",
+                    buttonFunction: () {
+                      context
+                          .read<WishListBloc>()
+                          .add(AddWishListProduct(product));
+                    },
+                  );
+                }),
                 const SizedBox(width: 10),
                 CustomIconButton(
                   context: context,
