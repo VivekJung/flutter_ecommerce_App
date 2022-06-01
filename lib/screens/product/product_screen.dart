@@ -143,6 +143,17 @@ class BottomMenuProduct extends StatelessWidget {
                       context
                           .read<WishListBloc>()
                           .add(AddWishListProduct(product));
+
+                      final snackBar = SnackBar(
+                        content: Row(
+                          children: const [
+                            Icon(Icons.favorite, color: Colors.white),
+                            SizedBox(width: 20),
+                            Text('Added to your Wishlist !'),
+                          ],
+                        ),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     },
                   );
                 }),

@@ -9,3 +9,4 @@ export 'ads/ad_banner_120.dart';
 export 'category_banner.dart';
 export 'product_banner.dart';
 export 'buttons/custom_button.dart';
+export 'cart_product_card.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 iconButton(
   Function()? function,
   BuildContext? context,
-  IconData icon,
+  IconData? icon,
   Color? color,
 ) {
   return GestureDetector(
