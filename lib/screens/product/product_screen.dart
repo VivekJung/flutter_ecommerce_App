@@ -164,6 +164,7 @@ class BottomMenuProduct extends StatelessWidget {
                   iconColor: Colors.white,
                   icon: Icons.shopping_cart,
                   iconLabelText: "Add to CART",
+                  buttonFunction: () {},
                 ),
                 const SizedBox(width: 10),
                 CustomIconButton(
@@ -172,6 +173,7 @@ class BottomMenuProduct extends StatelessWidget {
                   iconColor: Colors.white,
                   icon: Icons.share,
                   iconLabelText: "Share",
+                  buttonFunction: () {},
                 ),
                 const SizedBox(width: 10),
                 CustomIconButton(
@@ -180,6 +182,7 @@ class BottomMenuProduct extends StatelessWidget {
                   iconColor: Colors.white,
                   icon: Icons.star,
                   iconLabelText: "Rate",
+                  buttonFunction: () {},
                 ),
                 const SizedBox(width: 10),
                 CustomIconButton(
@@ -188,6 +191,7 @@ class BottomMenuProduct extends StatelessWidget {
                   iconColor: Colors.white,
                   icon: Icons.comment,
                   iconLabelText: "Comment",
+                  buttonFunction: () {},
                 ),
                 const SizedBox(width: 10),
               ],

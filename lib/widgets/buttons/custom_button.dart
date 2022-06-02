@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
   final BuildContext context;
-  final Color bgColor;
+  final Color? bgColor;
   final Color? textColor, iconColor;
   final double? elevation;
   final Function()? buttonFunction;
@@ -13,7 +13,7 @@ class CustomIconButton extends StatelessWidget {
   const CustomIconButton(
       {Key? key,
       required this.context,
-      required this.bgColor,
+      this.bgColor,
       required this.iconColor,
       this.buttonFunction,
       required this.icon,
@@ -26,19 +26,21 @@ class CustomIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-          primary: bgColor,
+          primary: bgColor ?? Colors.black,
           shape: const RoundedRectangleBorder(),
           elevation: elevation ?? 1),
-      onPressed: () {},
+      onPressed: buttonFunction,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          iconButton(buttonFunction, context, icon, iconColor),
+          const SizedBox(height: 3),
+          Icon(icon, color: iconColor),
+          // iconButton(() {}, context, icon, iconColor),
           iconLabelText == null
               ? Container()
               : Padding(
-                  padding: const EdgeInsets.only(top: 5.0, bottom: 3.0),
+                  padding: const EdgeInsets.only(top: 3.0, bottom: 2.0),
                   child: TextWidget(
                     text: iconLabelText,
                     fontSize: 10,

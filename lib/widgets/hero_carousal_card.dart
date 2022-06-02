@@ -3,18 +3,14 @@ import 'package:flutter/material.dart';
 
 class HeroCarousalCard extends StatelessWidget {
   final Category? category;
-  final Product? product;
 
-  const HeroCarousalCard({Key? key, this.category, this.product})
-      : super(key: key);
+  const HeroCarousalCard({Key? key, this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        product == null
-            ? Navigator.pushNamed(context, '/catalog', arguments: category)
-            : Navigator.pushNamed(context, '/catalog', arguments: product);
+        Navigator.pushNamed(context, '/catalog', arguments: category);
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 10.0),
@@ -23,7 +19,7 @@ class HeroCarousalCard extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 Image.network(
-                  product == null ? category!.imgUrl : product!.imgUrl,
+                  category!.imgUrl,
                   fit: BoxFit.cover,
                   width: 1000,
                 ),
@@ -44,8 +40,7 @@ class HeroCarousalCard extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 20.0),
-                    child: Text(
-                        product == null ? category!.name : product!.alias,
+                    child: Text(category!.alias,
                         style: Theme.of(context)
                             .textTheme
                             .headline2!
