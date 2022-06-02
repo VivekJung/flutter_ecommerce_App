@@ -6,8 +6,16 @@ class Product extends Equatable {
   final double price;
   final bool isRecommended, isPopular;
 
-  const Product(this.name, this.category, this.alias, this.imgUrl, this.price,
-      this.isRecommended, this.isPopular, this.details);
+  const Product(
+    this.name,
+    this.category,
+    this.alias,
+    this.imgUrl,
+    this.price,
+    this.isRecommended,
+    this.isPopular,
+    this.details,
+  );
   @override
   List<Object?> get props => [
         name,

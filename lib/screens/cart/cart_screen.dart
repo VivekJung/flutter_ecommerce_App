@@ -21,10 +21,9 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  double subtotal = 1060.00;
-
   @override
   Widget build(BuildContext context) {
+    log(Cart().subtotal.toString());
     return Scaffold(
       appBar: const CustomAppBar(title: "Cart"),
       bottomNavigationBar: const BottomAppBar(
@@ -38,44 +37,67 @@ class _CartScreenState extends State<CartScreen> {
           children: [
             Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Add item worth NRs 300 or more and \nget a "FREE Delivery" worth NRs 500/-',
-                      style: Theme.of(context).textTheme.headline5,
-                    ),
-                    Container(
-                      height: 40,
-                      padding: const EdgeInsets.only(top: 2, bottom: 2),
-                      color: Colors.black,
-                      child: Center(
-                        child: CustomIconButton(
-                          context: context,
-                          bgColor: Colors.black,
-                          iconColor: Colors.white,
-                          icon: Icons.add_circle,
-                          elevation: 0,
-                          buttonFunction: () =>
-                              Navigator.pushNamed(context, '/'),
-                          // iconLabelText: "Add more",
-                          // textColor: Colors.white,
-                        ),
+                Cart().subtotal < 3000
+                    ? Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                Cart().freeDeliveryString,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline5!
+                                    .copyWith(color: Colors.red),
+                              ),
+                              Container(
+                                height: 40,
+                                padding:
+                                    const EdgeInsets.only(top: 2, bottom: 2),
+                                color: Colors.black,
+                                child: Center(
+                                  child: CustomIconButton(
+                                    context: context,
+                                    bgColor: Colors.black,
+                                    iconColor: Colors.white,
+                                    icon: Icons.add_circle,
+                                    elevation: 0,
+                                    buttonFunction: () =>
+                                        Navigator.pushNamed(context, '/'),
+                                    // iconLabelText: "Add more",
+                                    // textColor: Colors.white,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          const Divider(color: Colors.grey),
+                        ],
+                      )
+                    : Text(
+                        'Your listed items',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5!
+                            .copyWith(color: Colors.green),
                       ),
-                    )
-                  ],
+                SizedBox(
+                  height: 400,
+                  child: ListView.builder(
+                    itemCount: Cart().products.length,
+                    itemBuilder: (context, index) {
+                      return CartProductCard(
+                        product: Cart().products[index],
+                      );
+                    },
+                  ),
                 ),
-                const Divider(color: Colors.grey),
-                CartProductCard(
-                  product: Product.products[10],
-                ),
-                CartProductCard(product: Product.products[2]),
               ],
             ),
             Column(children: [
               const Divider(color: Colors.black),
-              _billing(context),
-              _grandTotal(context),
+              _billing(context, Cart().subTotalString),
+              _grandTotal(context, Cart().grandTotalString),
             ]),
           ],
         ),
@@ -83,7 +105,7 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  _grandTotal(BuildContext context) {
+  _grandTotal(BuildContext context, grandTotal) {
     return Stack(
       children: [
         Container(
@@ -109,7 +131,7 @@ class _CartScreenState extends State<CartScreen> {
                       .textTheme
                       .headline3!
                       .copyWith(color: Colors.white)),
-              Text('NRS  ${(subtotal + 500)}/-',
+              Text('NRS  $grandTotal/-',
                   style: Theme.of(context)
                       .textTheme
                       .headline3!
@@ -121,7 +143,7 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-  _billing(context) {
+  _billing(context, subtotal) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 40),
       child: Column(
@@ -131,8 +153,7 @@ class _CartScreenState extends State<CartScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('SUBTOTAL ', style: Theme.of(context).textTheme.headline4),
-              Text('${subtotal.toInt()}/-',
-                  style: Theme.of(context).textTheme.headline4),
+              Text('$subtotal/-', style: Theme.of(context).textTheme.headline4),
             ],
           ),
           const SizedBox(height: 10),
@@ -141,7 +162,8 @@ class _CartScreenState extends State<CartScreen> {
             children: [
               Text('DELIVERY FEE ',
                   style: Theme.of(context).textTheme.headline4),
-              Text('${500}/-', style: Theme.of(context).textTheme.headline4),
+              Text('${Cart().deliveryFeeString}/-',
+                  style: Theme.of(context).textTheme.headline4),
             ],
           ),
         ],

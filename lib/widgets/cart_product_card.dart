@@ -36,7 +36,7 @@ class _CartProductCardState extends State<CartProductCard> {
             widget.product.imgUrl,
             width: 100,
             height: 80,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
           ),
           Expanded(
             child: Column(
