@@ -42,15 +42,22 @@ class _CartProductCardState extends State<CartProductCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(widget.product.category,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6!
+                        .copyWith(color: Colors.green[700])),
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 230,
                   child: Text(widget.product.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline4),
+                      style: Theme.of(context).textTheme.headline3),
                 ),
                 Text(
                   "NRs ${widget.product.price.toString()}",
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5!
+                      .copyWith(color: Colors.black54),
                 ),
               ],
             ),

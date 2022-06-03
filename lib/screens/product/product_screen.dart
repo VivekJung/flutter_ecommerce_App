@@ -250,12 +250,16 @@ class ProductTitle extends StatelessWidget {
                         .bodyText1!
                         .copyWith(color: Colors.white),
                   ),
-                  Text(
-                    product.name,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline1!
-                        .copyWith(color: Colors.white),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      product.name,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline1!
+                          .copyWith(color: Colors.white),
+                      // overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
