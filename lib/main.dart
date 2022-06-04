@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           title: 'Flutter Demo',
           theme: theme(),
           onGenerateRoute: AppRouter.onGenerateRoute,
-          initialRoute: CartScreen.routeName),
+          initialRoute: HomeScreen.routeName),
     );
   }
 }

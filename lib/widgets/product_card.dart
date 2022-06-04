@@ -1,6 +1,10 @@
+import 'dart:developer';
+
+import 'package:ecommerce_app/blocs/cart/cart_bloc.dart';
 import 'package:ecommerce_app/models/models.dart';
 import 'package:ecommerce_app/support_functions/icon_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -73,9 +77,28 @@ class ProductCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: iconButton(
-                        () {}, context, Icons.add_circle, Colors.white),
+                  BlocBuilder<CartBloc, CartState>(
+                    builder: (context, state) {
+                      if (state is CartLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (state is CartLoaded) {
+                        return Expanded(
+                          child: iconButton(() {
+                            context
+                                .read()<CartBloc>()
+                                .add(CartProductAdded(product));
+                          }, context, Icons.add_circle, Colors.white),
+                        );
+                      } else {
+                        log("Error occured while uploading to card in product card section. Check it out");
+                        return Text(
+                          'Oops! Something went wrong',
+                          style: Theme.of(context).textTheme.headline4,
+                        );
+                      }
+                    },
                   ),
                 ],
               ),

@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:ecommerce_app/blocs/cart/cart_bloc.dart';
 import 'package:ecommerce_app/config/theme/custom_text_widget.dart';
 import 'package:ecommerce_app/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/widgets/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -24,82 +26,100 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     log(Cart().subtotal.toString());
     return Scaffold(
-      appBar: const CustomAppBar(title: "Cart"),
-      bottomNavigationBar: const BottomAppBar(
-        color: Colors.black,
-        child: BottomMenuCart(),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                Cart().subtotal < 3000
-                    ? Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                Cart().freeDeliveryString,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline5!
-                                    .copyWith(color: Colors.red),
-                              ),
-                              Container(
-                                height: 40,
-                                padding:
-                                    const EdgeInsets.only(top: 2, bottom: 2),
-                                color: Colors.black,
-                                child: Center(
-                                  child: CustomIconButton(
-                                    context: context,
-                                    bgColor: Colors.black,
-                                    iconColor: Colors.white,
-                                    icon: Icons.add_circle,
-                                    elevation: 0,
-                                    buttonFunction: () =>
-                                        Navigator.pushNamed(context, '/'),
-                                    // iconLabelText: "Add more",
-                                    // textColor: Colors.white,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          const Divider(color: Colors.grey),
-                        ],
-                      )
-                    : Text(
-                        'Your listed items',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline5!
-                            .copyWith(color: Colors.green),
-                      ),
-                SizedBox(
-                  height: 400,
-                  child: ListView.builder(
-                    itemCount: Cart().products.length,
-                    itemBuilder: (context, index) {
-                      return CartProductCard(
-                        product: Cart().products[index],
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-            Column(children: [
-              const Divider(color: Colors.black),
-              _billing(context, Cart().subTotalString),
-              _grandTotal(context, Cart().grandTotalString),
-            ]),
-          ],
+        appBar: const CustomAppBar(title: "Cart"),
+        bottomNavigationBar: const BottomAppBar(
+          color: Colors.black,
+          child: BottomMenuCart(),
         ),
+        body: BlocBuilder<CartBloc, CartState>(
+          builder: (context, state) {
+            if (state is CartLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is CartLoaded) {
+              return _cartContentsDisplay(context, state.cart);
+            } else {
+              log('Unknown Error in Cart Section. Check it up');
+              return Text(
+                'Oops! something went wrong. :/',
+                style: Theme.of(context).textTheme.headline3,
+              );
+            }
+          },
+        ));
+  }
+
+  Padding _cartContentsDisplay(BuildContext context, cartContents) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: [
+              cartContents.subtotal < 3000
+                  ? Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              cartContents.freeDeliveryString,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5!
+                                  .copyWith(color: Colors.red),
+                            ),
+                            Container(
+                              height: 40,
+                              padding: const EdgeInsets.only(top: 2, bottom: 2),
+                              color: Colors.black,
+                              child: Center(
+                                child: CustomIconButton(
+                                  context: context,
+                                  bgColor: Colors.black,
+                                  iconColor: Colors.white,
+                                  icon: Icons.add_circle,
+                                  elevation: 0,
+                                  buttonFunction: () =>
+                                      Navigator.pushNamed(context, '/'),
+                                  // iconLabelText: "Add more",
+                                  // textColor: Colors.white,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        const Divider(color: Colors.grey),
+                      ],
+                    )
+                  : Text(
+                      'Your listed items',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5!
+                          .copyWith(color: Colors.green),
+                    ),
+              SizedBox(
+                height: 400,
+                child: ListView.builder(
+                  itemCount: cartContents.products.length,
+                  itemBuilder: (context, index) {
+                    return CartProductCard(
+                      product: cartContents.products[index],
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+          Column(children: [
+            const Divider(color: Colors.black),
+            _billing(context, Cart().subTotalString),
+            _grandTotal(context, Cart().grandTotalString),
+          ]),
+        ],
       ),
     );
   }
