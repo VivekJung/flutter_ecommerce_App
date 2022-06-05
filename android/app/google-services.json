@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "946594005667",
+    "project_id": "ayursadan-ecommerceapp",
+    "storage_bucket": "ayursadan-ecommerceapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946594005667:android:d2fb417b92a366b778b516",
+        "android_client_info": {
+          "package_name": "com.example.ecommerce_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "946594005667-r04bk9qn8bkbg6t6vlbdub9s2ke1q0v1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDizHg1jncYJFhqlIR4SRyR1OfbMiFzc_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "946594005667-r04bk9qn8bkbg6t6vlbdub9s2ke1q0v1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
