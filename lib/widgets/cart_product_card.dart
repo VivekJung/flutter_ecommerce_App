@@ -18,20 +18,6 @@ class CartProductCard extends StatefulWidget {
 }
 
 class _CartProductCardState extends State<CartProductCard> {
-  // int _qty = 1;
-
-  // void _qtyIncrementCounter() {
-  //   setState(() {
-  //     _qty++;
-  //   });
-  // }
-
-  // void _qtyDecrementCounter() {
-  //   setState(() {
-  //     _qty--;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -83,16 +69,11 @@ class _CartProductCardState extends State<CartProductCard> {
           children: [
             iconButton(() {
               context.read<CartBloc>().add(CartProductRemoved(product));
-              // _qty <= 1
-              //     ? context.read<CartBloc>().add(CartProductRemoved(product))
-              //     : _qtyDecrementCounter();
-              // log("Cart product count: $_qty");
             }, context, Icons.remove_circle, Colors.red),
             const SizedBox(width: 10),
             Text('$quantity', style: Theme.of(context).textTheme.headline4),
             const SizedBox(width: 10),
             iconButton(() {
-              // _qtyIncrementCounter();
               context.read<CartBloc>().add(CartProductAdded(product));
             }, context, Icons.add_circle, Colors.green),
           ],

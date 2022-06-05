@@ -6,6 +6,7 @@ class TextWidget extends StatelessWidget {
   final String? fontFamily;
   final double? fontSize;
   final FontWeight? fontWeight;
+  final TextAlign? align;
 
   const TextWidget({
     Key? key,
@@ -14,6 +15,7 @@ class TextWidget extends StatelessWidget {
     this.fontFamily,
     this.fontSize,
     this.fontWeight,
+    this.align,
   }) : super(key: key);
 
   @override
@@ -26,6 +28,7 @@ class TextWidget extends StatelessWidget {
         fontFamily: fontFamily ?? 'Avenir',
         fontWeight: fontWeight ?? FontWeight.normal,
       ),
+      textAlign: align ?? TextAlign.start,
     );
   }
 }

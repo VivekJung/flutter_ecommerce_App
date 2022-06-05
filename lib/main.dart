@@ -24,11 +24,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => CartBloc()..add(CartStarted()))
       ],
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: theme(),
-          onGenerateRoute: AppRouter.onGenerateRoute,
-          initialRoute: HomeScreen.routeName),
+        debugShowCheckedModeBanner: false,
+        title: 'AyurSadan Business',
+        theme: theme(),
+        onGenerateRoute: AppRouter.onGenerateRoute,
+        initialRoute: SplashScreen.routeName,
+      ),
     );
   }
 }

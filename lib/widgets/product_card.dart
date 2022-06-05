@@ -90,7 +90,9 @@ class ProductCard extends StatelessWidget {
                             context
                                 .read<CartBloc>()
                                 .add(CartProductAdded(product));
-                          }, context, Icons.add_circle, Colors.white),
+                            _createSnackbar(context, 'Added to CART !',
+                                Icons.shopping_cart);
+                          }, context, Icons.shopping_cart, Colors.white),
                         );
                       } else {
                         log("Error occured while uploading to cart in product card section. Check it out");
@@ -108,5 +110,18 @@ class ProductCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _createSnackbar(BuildContext context, String msg, IconData iconData) {
+    final snackBar = SnackBar(
+      content: Row(
+        children: [
+          Icon(iconData, color: Colors.white),
+          const SizedBox(width: 20),
+          Text(msg),
+        ],
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
