@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/cart/cart_bloc.dart';
 
 void main() {
+  // Bloc.observer = SimpleBocObserver();
   runApp(const MyApp());
 }
 

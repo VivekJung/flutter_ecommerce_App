@@ -8,26 +8,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartProductCard extends StatefulWidget {
   final Product product;
-  const CartProductCard({Key? key, required this.product}) : super(key: key);
+  final int quantity;
+  const CartProductCard(
+      {Key? key, required this.product, required this.quantity})
+      : super(key: key);
 
   @override
   State<CartProductCard> createState() => _CartProductCardState();
 }
 
 class _CartProductCardState extends State<CartProductCard> {
-  int _qty = 1;
+  // int _qty = 1;
 
-  void _qtyIncrementCounter() {
-    setState(() {
-      _qty++;
-    });
-  }
+  // void _qtyIncrementCounter() {
+  //   setState(() {
+  //     _qty++;
+  //   });
+  // }
 
-  void _qtyDecrementCounter() {
-    setState(() {
-      _qty--;
-    });
-  }
+  // void _qtyDecrementCounter() {
+  //   setState(() {
+  //     _qty--;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -67,40 +70,30 @@ class _CartProductCardState extends State<CartProductCard> {
             ),
           ),
           const SizedBox(width: 10),
-          _itemQuantityIncreaser(context, widget.product),
+          _itemQuantityIncreaser(context, widget.product, widget.quantity),
         ],
       ),
     );
   }
 
-  _itemQuantityIncreaser(context, product) {
+  _itemQuantityIncreaser(context, product, quantity) {
     return BlocBuilder<CartBloc, CartState>(
       builder: (context, state) {
         return Row(
           children: [
             iconButton(() {
-              _qty <= 1
-                  ? context.read<CartBloc>().add(CartProductRemoved(product))
-                  : _qtyDecrementCounter();
-              log("Cart product count: $_qty");
-
-              // if (_qty <= 1) {
-              //   _qty = 0;
-              //   context.read<CartBloc>().add(CartProductRemoved(product));
-              //   log("Cart product count: $_qty, ITEM Removed");
-              // } else if (_qty > 1) {
-              //   // _qty = 1;
-              //   _qtyDecrementCounter();
-
-              //   log("Cart product count: $_qty");
-              // }
+              context.read<CartBloc>().add(CartProductRemoved(product));
+              // _qty <= 1
+              //     ? context.read<CartBloc>().add(CartProductRemoved(product))
+              //     : _qtyDecrementCounter();
+              // log("Cart product count: $_qty");
             }, context, Icons.remove_circle, Colors.red),
             const SizedBox(width: 10),
-            Text('$_qty', style: Theme.of(context).textTheme.headline4),
+            Text('$quantity', style: Theme.of(context).textTheme.headline4),
             const SizedBox(width: 10),
             iconButton(() {
-              _qtyIncrementCounter();
-              // context.read<CartBloc>().add(CartProductAdded(product));
+              // _qtyIncrementCounter();
+              context.read<CartBloc>().add(CartProductAdded(product));
             }, context, Icons.add_circle, Colors.green),
           ],
         );

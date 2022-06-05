@@ -108,10 +108,20 @@ class _CartScreenState extends State<CartScreen> {
               SizedBox(
                 height: 400,
                 child: ListView.builder(
-                  itemCount: cartContents.products.length,
+                  itemCount: cartContents
+                      .productQuantity(cartContents.products)
+                      .keys
+                      .length,
                   itemBuilder: (context, index) {
                     return CartProductCard(
-                      product: cartContents.products[index],
+                      product: cartContents
+                          .productQuantity(cartContents.products)
+                          .keys
+                          .elementAt(index),
+                      quantity: cartContents
+                          .productQuantity(cartContents.products)
+                          .values
+                          .elementAt(index),
                     );
                   },
                 ),
