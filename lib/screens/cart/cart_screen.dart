@@ -24,7 +24,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
-    log(Cart().subtotal.toString());
+    log(const Cart().subtotal.toString());
     return Scaffold(
         appBar: const CustomAppBar(title: "Cart"),
         bottomNavigationBar: const BottomAppBar(
@@ -37,8 +37,10 @@ class _CartScreenState extends State<CartScreen> {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (state is CartLoaded) {
-              return _cartContentsDisplay(context, state.cart);
+            }
+            if (state is CartLoaded) {
+              var cartState = state.cart;
+              return cartContentsDisplay(context, cartState);
             } else {
               log('Unknown Error in Cart Section. Check it up');
               return Text(
@@ -50,7 +52,10 @@ class _CartScreenState extends State<CartScreen> {
         ));
   }
 
-  Padding _cartContentsDisplay(BuildContext context, cartContents) {
+  Padding cartContentsDisplay(
+    BuildContext context,
+    Cart cartContents,
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
       child: Column(
@@ -59,13 +64,14 @@ class _CartScreenState extends State<CartScreen> {
           Column(
             children: [
               cartContents.subtotal < 3000
+                  //Delivery fee status message with action button
                   ? Column(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              cartContents.freeDeliveryString,
+                              "Add item worth ${cartContents.deliveryAmtStatusString} or more and \nget Delivery package worth 500 for FREE !",
                               style: Theme.of(context)
                                   .textTheme
                                   .headline5!
@@ -84,23 +90,21 @@ class _CartScreenState extends State<CartScreen> {
                                   elevation: 0,
                                   buttonFunction: () =>
                                       Navigator.pushNamed(context, '/'),
-                                  // iconLabelText: "Add more",
-                                  // textColor: Colors.white,
                                 ),
                               ),
                             )
                           ],
                         ),
-                        const Divider(color: Colors.grey),
                       ],
                     )
                   : Text(
-                      'Your listed items',
+                      'WOW !! You have unlocked "Delivery Package : LV 1". \nWith this you can get NRs 500 off on total billing',
                       style: Theme.of(context)
                           .textTheme
                           .headline5!
                           .copyWith(color: Colors.green),
                     ),
+              const Divider(color: Colors.grey),
               SizedBox(
                 height: 400,
                 child: ListView.builder(
@@ -116,9 +120,39 @@ class _CartScreenState extends State<CartScreen> {
           ),
           Column(children: [
             const Divider(color: Colors.black),
-            _billing(context, Cart().subTotalString),
-            _grandTotal(context, Cart().grandTotalString),
+            _billing(context, cartContents.subTotalString,
+                cartContents.deliveryFeeString),
+            _grandTotal(context, cartContents.grandTotalString),
           ]),
+        ],
+      ),
+    );
+  }
+
+  _billing(context, subtotal, deliveryFee) {
+    log(subtotal.toString());
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 40),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('SUBTOTAL ', style: Theme.of(context).textTheme.headline4),
+              Text('$subtotal/-', style: Theme.of(context).textTheme.headline4),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('DELIVERY FEE ',
+                  style: Theme.of(context).textTheme.headline4),
+              Text('$deliveryFee/-',
+                  style: Theme.of(context).textTheme.headline4),
+            ],
+          ),
         ],
       ),
     );
@@ -136,7 +170,7 @@ class _CartScreenState extends State<CartScreen> {
         ),
         Container(
           margin: const EdgeInsets.all(3.0),
-          padding: const EdgeInsets.symmetric(horizontal: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           width: MediaQuery.of(context).size.width,
           height: 50,
           decoration: const BoxDecoration(
@@ -159,34 +193,6 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
       ],
-    );
-  }
-
-  _billing(context, subtotal) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 40),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('SUBTOTAL ', style: Theme.of(context).textTheme.headline4),
-              Text('$subtotal/-', style: Theme.of(context).textTheme.headline4),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('DELIVERY FEE ',
-                  style: Theme.of(context).textTheme.headline4),
-              Text('${Cart().deliveryFeeString}/-',
-                  style: Theme.of(context).textTheme.headline4),
-            ],
-          ),
-        ],
-      ),
     );
   }
 }

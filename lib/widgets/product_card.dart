@@ -83,16 +83,17 @@ class ProductCard extends StatelessWidget {
                         return const Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (state is CartLoaded) {
+                      }
+                      if (state is CartLoaded) {
                         return Expanded(
                           child: iconButton(() {
                             context
-                                .read()<CartBloc>()
+                                .read<CartBloc>()
                                 .add(CartProductAdded(product));
                           }, context, Icons.add_circle, Colors.white),
                         );
                       } else {
-                        log("Error occured while uploading to card in product card section. Check it out");
+                        log("Error occured while uploading to cart in product card section. Check it out");
                         return Text(
                           'Oops! Something went wrong',
                           style: Theme.of(context).textTheme.headline4,

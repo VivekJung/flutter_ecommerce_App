@@ -1,6 +1,10 @@
+import 'dart:developer';
+
+import 'package:ecommerce_app/blocs/cart/cart_bloc.dart';
 import 'package:ecommerce_app/models/models.dart';
 import 'package:ecommerce_app/support_functions/icon_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartProductCard extends StatefulWidget {
   final Product product;
@@ -63,29 +67,44 @@ class _CartProductCardState extends State<CartProductCard> {
             ),
           ),
           const SizedBox(width: 10),
-          _itemQuantityIncreaser(context),
+          _itemQuantityIncreaser(context, widget.product),
         ],
       ),
     );
   }
 
-  _itemQuantityIncreaser(context) {
-    return Row(
-      children: [
-        iconButton(() {
-          if (_qty > 1) {
-            _qtyDecrementCounter();
-          } else {
-            _qty = 1;
-          }
-        }, context, Icons.remove_circle, Colors.red),
-        const SizedBox(width: 10),
-        Text('$_qty', style: Theme.of(context).textTheme.headline4),
-        const SizedBox(width: 10),
-        iconButton(() {
-          _qtyIncrementCounter();
-        }, context, Icons.add_circle, Colors.green),
-      ],
+  _itemQuantityIncreaser(context, product) {
+    return BlocBuilder<CartBloc, CartState>(
+      builder: (context, state) {
+        return Row(
+          children: [
+            iconButton(() {
+              _qty <= 1
+                  ? context.read<CartBloc>().add(CartProductRemoved(product))
+                  : _qtyDecrementCounter();
+              log("Cart product count: $_qty");
+
+              // if (_qty <= 1) {
+              //   _qty = 0;
+              //   context.read<CartBloc>().add(CartProductRemoved(product));
+              //   log("Cart product count: $_qty, ITEM Removed");
+              // } else if (_qty > 1) {
+              //   // _qty = 1;
+              //   _qtyDecrementCounter();
+
+              //   log("Cart product count: $_qty");
+              // }
+            }, context, Icons.remove_circle, Colors.red),
+            const SizedBox(width: 10),
+            Text('$_qty', style: Theme.of(context).textTheme.headline4),
+            const SizedBox(width: 10),
+            iconButton(() {
+              _qtyIncrementCounter();
+              // context.read<CartBloc>().add(CartProductAdded(product));
+            }, context, Icons.add_circle, Colors.green),
+          ],
+        );
+      },
     );
   }
 }

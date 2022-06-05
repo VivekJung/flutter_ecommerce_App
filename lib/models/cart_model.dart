@@ -18,19 +18,20 @@ class Cart extends Equatable {
 
   double get grandTotal => subtotal + deliveryFee(subtotal);
 
-  String freeDelivery(subtotal) {
-    if (subtotal > 3000) {
-      return 'You have Free Delivery';
+  double deliveryAmtStatus(subtotal) {
+    if (subtotal >= 3000) {
+      return 0;
     } else {
-      double missingAmt = 3001.00 - subtotal;
-      return 'Add item worth NRs $missingAmt or more and \nget "Delivery charges" of NRs 500.0 FREE';
+      double missingAmt = 3000.00 - subtotal;
+      return missingAmt;
     }
   }
 
   String get grandTotalString => grandTotal.toStringAsFixed(2);
   String get subTotalString => subtotal.toStringAsFixed(2);
   String get deliveryFeeString => deliveryFee(subtotal).toStringAsFixed(2);
-  String get freeDeliveryString => freeDelivery(subtotal);
+  String get deliveryAmtStatusString =>
+      deliveryAmtStatus(subtotal).toStringAsFixed(2);
 
   @override
   List<Object?> get props => [products];

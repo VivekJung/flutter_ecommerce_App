@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/blocs/cart/cart_bloc.dart';
 import 'package:ecommerce_app/blocs/wishlist/wishlist_bloc.dart';
 import 'package:ecommerce_app/models/models.dart';
 import 'package:flutter/material.dart';
@@ -131,6 +132,7 @@ class BottomMenuProduct extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               children: [
+                //Add to wishlisht
                 BlocBuilder<WishListBloc, WishListState>(
                     builder: (context, state) {
                   return CustomIconButton(
@@ -144,27 +146,29 @@ class BottomMenuProduct extends StatelessWidget {
                           .read<WishListBloc>()
                           .add(AddWishListProduct(product));
 
-                      final snackBar = SnackBar(
-                        content: Row(
-                          children: const [
-                            Icon(Icons.favorite, color: Colors.white),
-                            SizedBox(width: 20),
-                            Text('Added to your Wishlist !'),
-                          ],
-                        ),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      _createSnackbar(
+                          context, "Added to wishlist", Icons.favorite);
                     },
                   );
                 }),
                 const SizedBox(width: 10),
-                CustomIconButton(
-                  context: context,
-                  bgColor: const Color.fromARGB(255, 11, 163, 57),
-                  iconColor: Colors.white,
-                  icon: Icons.shopping_cart,
-                  iconLabelText: "Add to CART",
-                  buttonFunction: () {},
+
+                //Add to CART
+                BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    return CustomIconButton(
+                      context: context,
+                      bgColor: const Color.fromARGB(255, 11, 163, 57),
+                      iconColor: Colors.white,
+                      icon: Icons.shopping_cart,
+                      iconLabelText: "Add to CART",
+                      buttonFunction: () {
+                        context.read<CartBloc>().add(CartProductAdded(product));
+                        _createSnackbar(
+                            context, "Added to CART !", Icons.shopping_cart);
+                      },
+                    );
+                  },
                 ),
                 const SizedBox(width: 10),
                 CustomIconButton(
@@ -200,6 +204,19 @@ class BottomMenuProduct extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _createSnackbar(BuildContext context, String msg, IconData iconData) {
+    final snackBar = SnackBar(
+      content: Row(
+        children: [
+          Icon(iconData, color: Colors.white),
+          const SizedBox(width: 20),
+          Text(msg),
+        ],
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
 
