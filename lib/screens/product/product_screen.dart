@@ -261,7 +261,7 @@ class ProductTitle extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${product.alias} with",
+                    "With",
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1!

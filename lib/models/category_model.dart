@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class Category extends Equatable {
@@ -12,6 +13,15 @@ class Category extends Equatable {
 
   @override
   List<Object?> get props => [name, imgUrl];
+
+  static Category fromSnapshot(DocumentSnapshot snap) {
+    Category category = Category(
+      name: snap['name'],
+      imgUrl: snap['imgUrl'],
+      alias: snap['alias'],
+    );
+    return category;
+  }
 
   static List<Category> categories = [
     const Category(
@@ -29,7 +39,7 @@ class Category extends Equatable {
     ),
     const Category(
       // soothing and relaxing
-      alias: "Sooth thy self ",
+      alias: "Sooth thy self",
       name: "Relaxing",
       imgUrl:
           "https://img.freepik.com/free-photo/beautiful-ceramic-teapot-concrete-background-top-view-copy-space_169016-17128.jpg?t=st=1653883983~exp=1653884583~hmac=266bf84a026d45a169e85aeda5669846b160a21d2880859c1f019fa556d19a41&w=740",
