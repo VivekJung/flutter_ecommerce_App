@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: const CustomAppBar(title: "Ayur Sadan"),
-      bottomNavigationBar: const CustomBottomAppBar(),
+      bottomNavigationBar: const CustomBottomAppBar(screen: routeName),
       body: Column(
         children: [
           //categories

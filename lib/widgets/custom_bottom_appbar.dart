@@ -1,10 +1,12 @@
 import 'package:ecommerce_app/support_functions/icon_button.dart';
+import 'package:ecommerce_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../config/theme/custom_text_widget.dart';
+
 class CustomBottomAppBar extends StatelessWidget {
-  const CustomBottomAppBar({
-    Key? key,
-  }) : super(key: key);
+  final String screen;
+  const CustomBottomAppBar({Key? key, required this.screen}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,28 +16,87 @@ class CustomBottomAppBar extends StatelessWidget {
         height: 50,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            iconButton(
-              () => Navigator.pushNamed(context, '/'),
-              context,
-              Icons.home,
-              Colors.white,
-            ),
-            iconButton(
-              () => Navigator.pushNamed(context, '/cart'),
-              context,
-              Icons.shopping_cart,
-              Colors.white,
-            ),
-            iconButton(
-              () => Navigator.pushNamed(context, '/user'),
-              context,
-              Icons.person,
-              Colors.white,
-            ),
-          ],
+          children: _selectNavBar(context, screen) ?? _buildNavBar(context),
         ),
       ),
     );
+  }
+
+  List<Widget>? _selectNavBar(context, screen) {
+    switch (screen) {
+      case '/':
+        return _buildNavBar(context);
+      case '/wishlist':
+        return _buildNavBar(context);
+      case '/checkout':
+        return _buildOrderNowNavBar(context);
+      default:
+        return _buildNavBar(context);
+    }
+  }
+
+  List<Widget> _buildNavBar(context) {
+    return [
+      iconButton(
+        () => Navigator.pushNamed(context, '/'),
+        context,
+        Icons.home,
+        Colors.white,
+      ),
+      iconButton(
+        () => Navigator.pushNamed(context, '/cart'),
+        context,
+        Icons.shopping_cart,
+        Colors.white,
+      ),
+      iconButton(
+        () => Navigator.pushNamed(context, '/user'),
+        context,
+        Icons.person,
+        Colors.white,
+      ),
+    ];
+  }
+
+  List<Widget> _buildOrderNowNavBar(context) {
+    return [
+      CustomIconButton(
+        context: context,
+        bgColor: Colors.transparent,
+        iconColor: Colors.white,
+        icon: Icons.arrow_back_ios_new,
+        buttonFunction: () => Navigator.pop(context),
+      ),
+      const SizedBox(width: 20),
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              elevation: 0,
+              primary: Color.fromARGB(255, 206, 101, 40),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+            ),
+            child: const Center(
+              child: TextWidget(
+                text: "ORDER NOW",
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                textColor: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+      const SizedBox(width: 20),
+      CustomIconButton(
+        context: context,
+        bgColor: Colors.transparent,
+        iconColor: Colors.white,
+        icon: Icons.home,
+        buttonFunction: () => Navigator.pushNamed(context, '/'),
+      ),
+    ];
   }
 }

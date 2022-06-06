@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         title: 'AyurSadan Business',
         theme: theme(),
         onGenerateRoute: AppRouter.onGenerateRoute,
-        initialRoute: SplashScreen.routeName,
+        initialRoute: CheckOutScreen.routeName,
       ),
     );
   }

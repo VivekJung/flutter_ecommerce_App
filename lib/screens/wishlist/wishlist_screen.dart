@@ -22,7 +22,7 @@ class WishListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(title: "WishList"),
-      bottomNavigationBar: const CustomBottomAppBar(),
+      bottomNavigationBar: const CustomBottomAppBar(screen: routeName),
       body: BlocBuilder<WishListBloc, WishListState>(
         builder: (context, state) {
           try {
