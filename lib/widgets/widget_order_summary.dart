@@ -81,28 +81,30 @@ class WidgetOrderSummary extends StatelessWidget {
             color: Colors.black.withAlpha(50),
           ),
         ),
-        Container(
-          margin: const EdgeInsets.all(3.0),
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          width: MediaQuery.of(context).size.width,
-          height: 50,
-          decoration: const BoxDecoration(
-            color: Colors.black,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('GRAND TOTAL ',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3!
-                      .copyWith(color: Colors.white)),
-              Text('NRS  $grandTotal/-',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3!
-                      .copyWith(color: Colors.white)),
-            ],
+        Center(
+          child: Container(
+            margin: const EdgeInsets.all(3.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            width: MediaQuery.of(context).size.width,
+            height: 52,
+            decoration: const BoxDecoration(
+              color: Colors.black,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('GRAND TOTAL ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.white)),
+                Text('NRS  $grandTotal/-',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.white)),
+              ],
+            ),
           ),
         ),
       ],

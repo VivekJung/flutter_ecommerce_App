@@ -1,6 +1,8 @@
+import 'package:ecommerce_app/blocs/checkout/checkout_bloc.dart';
 import 'package:ecommerce_app/support_functions/icon_button.dart';
 import 'package:ecommerce_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../config/theme/custom_text_widget.dart';
 
@@ -68,26 +70,41 @@ class CustomBottomAppBar extends StatelessWidget {
         buttonFunction: () => Navigator.pop(context),
       ),
       const SizedBox(width: 20),
-      Expanded(
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-              primary: Color.fromARGB(255, 206, 101, 40),
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-            ),
-            child: const Center(
-              child: TextWidget(
-                text: "ORDER NOW",
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-                textColor: Colors.white,
+      BlocBuilder<CheckoutBloc, CheckoutState>(
+        builder: (context, state) {
+          if (state is CheckoutLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state is CheckoutLoaded) {
+            return Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    context
+                        .read<CheckoutBloc>()
+                        .add(ConfirmCheckout(checkout: state.checkout));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    primary: const Color.fromARGB(255, 206, 101, 40),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                  ),
+                  child: const Center(
+                    child: TextWidget(
+                      text: "ORDER NOW",
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                      textColor: Colors.white,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
+            );
+          } else {
+            return const Text('Oops! Something went wrong ');
+          }
+        },
       ),
       const SizedBox(width: 20),
       CustomIconButton(

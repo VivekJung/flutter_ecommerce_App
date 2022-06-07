@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   double iconSize = 100;
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(milliseconds: 500),
+    Timer(const Duration(milliseconds: 1000),
         () => Navigator.pushNamed(context, '/'));
     return SafeArea(
       child: Scaffold(
