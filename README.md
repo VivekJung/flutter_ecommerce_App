@@ -1,4 +1,4 @@
 # ecommerce_app
 
 This is a tryout project on Bloc pattern. 
-jume-7-2022 : project is on hold, for now.
+june-7-2022 : project is on hold, for now.
